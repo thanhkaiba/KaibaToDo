@@ -1,0 +1,13 @@
+<div class="header">
+  <h2>My To Do List</h2>
+  <label for="myInput"></label>
+  <input type="text" id="myInput" placeholder="Title..." [(ngModel)]="newJob">
+  <button (click)="newElement()" [disabled]="newJob.length === 0" class="addBtn">Add</button>
+</div>
+
+<ul>
+  <li *ngFor="let job of list" [ngClass]="job.done ? 'checked' : ''" (click)="doneJob(job)">
+    {{job.name}}
+    <span (click)="deleteJob(job.name)" class="close">x</span>
+  </li>
+</ul>
