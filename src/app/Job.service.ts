@@ -18,6 +18,9 @@ export class JobService {
       )
       .pipe(
         tap(jobs => {
+          if (jobs == null) {
+            jobs = [];
+          }
           this.list = jobs;
           this.listNotification.next(this.list);
         })
