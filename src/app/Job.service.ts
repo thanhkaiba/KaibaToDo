@@ -17,8 +17,13 @@ export class JobService {
         'https://kaiba-todo-list-default-rtdb.firebaseio.com/todolist.json'
       )
       .pipe(
-        tap(jobs => {
-          this.list = jobs;
+        tap((jobs: JobModel[]) => {
+          if (jobs == null) {
+            jobs = [];
+          }
+          this.list = jobs.map(job => {
+            return new JobModel(job.name, job.done);
+          });
           this.listNotification.next(this.list);
         })
       ).subscribe();

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {JobModel} from './job.model';
-import { HttpClient } from '@angular/common/http';
-import {tap} from 'rxjs/operators';
 import {JobService} from './Job.service';
 
 @Component({
@@ -11,7 +9,7 @@ import {JobService} from './Job.service';
 })
 export class AppComponent {
   list: JobModel[] = [];
-  newJob = '';
+  newJob = "";
 
   constructor(private jobService: JobService) {
     this.list = jobService.list;
@@ -21,9 +19,19 @@ export class AppComponent {
   }
 
   newElement(): void  {
-    this.list.push(new JobModel(this.newJob));
-    this.newJob = '';
-    this.jobService.saveJobs();
+
+    const findJob = this.list.find(job => {
+      return job.name === this.newJob;
+    });
+
+    if (findJob != null) {
+      findJob.count++;
+    } else {
+      this.list.push(new JobModel(this.newJob));
+      this.newJob = "";
+      this.jobService.saveJobs();
+    }
+
 
   }
 
